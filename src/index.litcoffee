@@ -35,19 +35,20 @@ Here are the templates for the native functions we will use.
 
     apiTemplate =
         parse_options_create: [ ParseOptions, [ ] ]
-        parse_options_set_null_block: [ ref.types.void, [ ParseOptions, int ] ]
+        # parse_options_set_null_block: [ ref.types.void, [ ParseOptions, int ] ]
         parse_options_set_islands_ok: [ ref.types.void, [ ParseOptions, int ] ]
         parse_options_set_verbosity: [ ref.types.void, [ ParseOptions, int ] ]
-        parse_options_set_allow_null: [ ref.types.void, [ ParseOptions, int ] ]
+        # parse_options_set_allow_null: [ ref.types.void, [ ParseOptions, int ] ]
         parse_options_set_max_null_count: [ ref.types.void, [ ParseOptions, int ] ]
-        dictionary_create: [ Dictionary, [ string, string, string, string ] ]
+        # dictionary_create: [ Dictionary, [ string, string, string, string ] ]
+        dictionary_create_lang: [ Dictionary, [ string ] ]
         sentence_create: [ Sentence, [ string, Dictionary ] ]
         sentence_parse: [ int, [ Sentence, ParseOptions ] ]
         sentence_length: [ int, [ Sentence ] ]
-        sentence_get_word: [ string, [ Sentence, int ] ]
+        # sentence_get_word: [ string, [ Sentence, int ] ]
         linkage_create: [ Linkage, [ int, Sentence, ParseOptions ] ]
         linkage_print_diagram: [ string, [ Linkage ] ]
-        linkage_constituent_tree: [ CNodePtr, [ Linkage ] ]
+        # linkage_constituent_tree: [ CNodePtr, [ Linkage ] ]
         linkage_print_constituent_tree: [ string, [ Linkage, int] ]
         linkage_get_num_links: [ int, [ Linkage ] ]
         linkage_get_link_label: [ string, [ Linkage, int ] ]
@@ -73,7 +74,7 @@ Utility functions...
 Default configuration for data paths.
 
     defaultConfig =
-        dictPath: defaultDataPath + '4.0.dict'
+        dictPath: defaultDataPath
         ppPath: defaultDataPath + '4.0.knowledge'
         consPath: defaultDataPath + '4.0.constituent-knowledge'
         affixPath: defaultDataPath + '4.0.affix'
@@ -89,9 +90,10 @@ A few utility methods for the parser.
             @config = _.extend config or {}, defaultConfig
             @options = lib.parse_options_create()
             lib.parse_options_set_verbosity @options, (if @config.verbose then 1  else 0)
-            lib.parse_options_set_allow_null @options, 1
+            # lib.parse_options_set_allow_null @options, 1
             lib.parse_options_set_max_null_count @options, 3
-            @dictionary = lib.dictionary_create @config.dictPath, @config.ppPath, @config.consPath, @config.affixPath
+            # @dictionary = lib.dictionary_create_lang @config.dictPath, @config.ppPath, @config.consPath, @config.affixPath
+            @dictionary = lib.dictionary_create_lang 'en'
 
 Parse input, and return linkage if exists.
 
@@ -109,7 +111,7 @@ Linkage class which allows for more specific parsing of grammar.
 
         constructor: (@linkage) ->
             @links = @getLinks()
-            @tree = @getTree()
+            # @tree = @getTree()
             @words = @getWords()
 
 Recursive tree builder method.
@@ -125,9 +127,9 @@ Recursive tree builder method.
 
 Get a tree of grammar nodes which map out how the input sentence is structered.
 
-        getTree: ->
-            rootPtr = lib.linkage_constituent_tree @linkage
-            @buildNode rootPtr.deref(), @linkage
+        # getTree: ->
+            # rootPtr = lib.linkage_constituent_tree @linkage
+            # @buildNode rootPtr.deref(), @linkage
 
 Get array of grammar links based on linkage.
 
