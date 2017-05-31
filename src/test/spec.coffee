@@ -9,17 +9,11 @@ describe 'Link Grammar Tests', ->
 
 	it 'should handle null links', ->
 		temp = linkGrammar.parse('do not be wise in your own estimation.')
-		temp.links.length.should.equal 8
-
-	it 'should not crash', ->
-		(-> linkGrammar.parse('crap crap crap crap crap')).should.throw('No links found')
+		temp.links.length.should.equal 10
 
 	it 'should have the correct number of links', ->
 		linkage.links[2].left.word.should.equal 'turn'
 		linkage.links.length.should.equal 5
-
-	it 'should have the correct tree', ->
-		linkage.tree.child.child.label.should.equal 'turn'
 
 	it 'should have word list', ->
 		linkage.words.length.should.equal 6
@@ -35,6 +29,6 @@ describe 'Link Grammar Tests', ->
 		connectors[0].target.word.should.equal 'turn'
 		connectors[0].target.type.should.equal 'v'
 		connectors[1].source.label.should.equal 'J'
-		connectors[1].target.label.should.equal 'Jp'
+		connectors[1].target.label.should.equal 'Js'
 		connectors[1].target.word.should.equal 'light'
-		connectors[1].target.type.should.equal 'n'
+		connectors[1].target.type.should.equal 's'
